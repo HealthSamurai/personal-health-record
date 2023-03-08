@@ -1,5 +1,6 @@
 import { Patient } from 'aidbox-sdk/aidbox-types'
 
+import Logo from '../../assets/logo.svg'
 import { Divider } from '../../shared/divider/divider'
 
 import { Contacts } from './contacts'
@@ -19,7 +20,7 @@ export function Layout ({ patient }: Props): JSX.Element | null {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <p>HS PHR</p>
+        <Logo />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
