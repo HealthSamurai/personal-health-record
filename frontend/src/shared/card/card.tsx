@@ -16,45 +16,10 @@ interface Props {
   children: ReactNode | ReactNode[]
   bottomActions?: BottomAction | BottomAction[]
   alignCenter?: boolean
-
   loading?: boolean
 }
 
 export function CardWrapper ({ title, children, bottomActions, alignCenter, empty, loading }: Props) {
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h4>{title}</h4>
-
-        <div
-          className={cx(styles.cardWrapper, {
-            [styles.withActions]: false,
-            [styles.alignCenter]: true
-          })}
-        >
-          <LoadingCard />
-        </div>
-      </div>
-    )
-  }
-
-  if (empty) {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h4>{title}</h4>
-
-        <div
-          className={cx(styles.cardWrapper, {
-            [styles.withActions]: false,
-            [styles.alignCenter]: true
-          })}
-        >
-          <NoDateCard />
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h4>{title}</h4>
@@ -65,11 +30,39 @@ export function CardWrapper ({ title, children, bottomActions, alignCenter, empt
           [styles.alignCenter]: alignCenter
         })}
       >
-        { children}
+        <Content
+          loading={loading}
+          empty={empty}
+          component={children}
+        />
       </div>
       {bottomActions && <BottomActions bottomActions={bottomActions} />}
     </div>
   )
+}
+
+interface ContentProps {
+  loading?: boolean
+  empty?: boolean
+  component: ReactNode | ReactNode[]
+
+}
+export function Content ({
+  loading, empty, component
+}:ContentProps) {
+  if (loading) {
+    return (
+      <LoadingCard />
+    )
+  }
+
+  if (empty) {
+    return (
+      <NoDateCard />
+    )
+  }
+
+  return component as JSX.Element
 }
 
 interface BottomActionsProps {
