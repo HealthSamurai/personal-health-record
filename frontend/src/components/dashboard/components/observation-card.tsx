@@ -4,22 +4,14 @@ import { useEffect, useMemo, useState } from 'react'
 import { CardWrapper } from '../../../shared/card'
 import { Divider } from '../../../shared/divider/divider'
 import { client } from '../../../utils/aidbox-client'
+import { formatDate } from '../../../utils/format-date'
 
 import styles from './workspace.module.css'
 
-function formatDate (date: string) {
-  if (date.includes('T')) {
-    let [year, month, day] = date.split('T')[0].split('-')
-    return `${day}/${month}/${year}`
-  }
-
-  let [year, month, day] = date.split('-')
-  return `${day}/${month}/${year}`
-}
 export function ObservationsCard (): JSX.Element {
+  let searchParams = new URLSearchParams(document.location.search)
   let [total, setTotal] = useState<number>(0)
   let [loading, setLoading] = useState(true)
-  let searchParams = new URLSearchParams(document.location.search)
   let patient_id = searchParams.get('id')
   let [observations, setObservations] = useState<Observation[]>()
 

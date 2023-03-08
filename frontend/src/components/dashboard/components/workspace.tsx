@@ -2,6 +2,7 @@ import { Patient } from 'aidbox-sdk/aidbox-types'
 
 import { AllergiesIntoleranceCard } from './allergies-intolerance-card'
 import { AppointmentsCard } from './appointments-card'
+import { ClinicalVitals } from './clinical-vitals'
 import { ConditionsCard } from './conditions-card'
 import { ImmunizationsCard } from './immunizations-card'
 import { ObservationsCard } from './observation-card'
@@ -24,6 +25,9 @@ export function Workspace ({ patient }: Props) {
           <ObservationsCard />
           <AllergiesIntoleranceCard />
           <ImmunizationsCard />
+        </div>
+        <div style={{ padding: '0 3rem' }}>
+          <ClinicalVitals />
         </div>
       </div>
     </>

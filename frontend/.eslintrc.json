@@ -11,14 +11,12 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:react-hooks/recommended"
 ],
     "plugins": [
     "@typescript-eslint",
     "react",
     "react-hooks",
-    "jsx-a11y",
     "prefer-let"
 ],
     "rules": {
