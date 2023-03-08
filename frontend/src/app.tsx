@@ -1,8 +1,14 @@
 import './app.css'
-import { Main } from './components/main'
+import { NextUIProvider } from '@nextui-org/react'
+
+import { Dashboard } from './components/dashboard/dashboard'
 
 function App () {
-  return <Main />
+  return (
+    <NextUIProvider>
+      <Dashboard />
+    </NextUIProvider>
+  )
 }
 
 export default App
