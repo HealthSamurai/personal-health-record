@@ -9,6 +9,8 @@ import { Divider } from '../../../shared/divider/divider'
 import { client } from '../../../utils/aidbox-client'
 import { transformName } from '../../../utils/transform-name'
 
+import styles from './workspace.module.css'
+
 function formatDate (date: string) {
   if (date.includes('T')) {
     let [year, month, day] = date.split('T')[0].split('-')
@@ -23,6 +25,7 @@ export function AppointmentsCard () {
   let [nextAppointment, setNextAppointment] = useState<Appointment>()
   let [appointments, setAppointments] = useState<Appointment[]>([])
   let [total, setTotal] = useState<number>(0)
+  let [loading, setLoading] = useState(true)
   let searchParams = new URLSearchParams(document.location.search)
   let patient_id = searchParams.get('id')
 
@@ -34,6 +37,7 @@ export function AppointmentsCard () {
 
     if (response.entry.length > 0) {
       setNextAppointment(response?.entry[0].resource ?? {})
+      setLoading(false)
     }
 
     return response.entry.length > 0
@@ -43,13 +47,12 @@ export function AppointmentsCard () {
     let response = await client.getResources('Appointment')
       .where('patient', `Patient/${patient_id}`)
 
-    console.log('response', response)
-
     if (response.entry.length > 0) {
       setAppointments(response?.entry.map((r) => r.resource))
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       setTotal(response.total)
+      setLoading(false)
     }
   }, [patient_id])
 
@@ -74,11 +77,13 @@ export function AppointmentsCard () {
 
   let bottomAction = nextAppointment ? [nextAppointmentAction, appointmentsAction] : appointmentsAction
 
-  let title = nextAppointment ? 'Next Appointment' : 'Appointments' + (total && `(${total})`)
+  let title = nextAppointment ? 'Next Appointment' : 'Appointments' + (total > 0 ? `(${total})` : '')
 
   return (
     <CardWrapper
+      loading={loading}
       alignCenter={!!nextAppointment}
+      empty={!nextAppointment && total === 0}
       title={title}
       bottomActions={bottomAction}
     >
@@ -164,6 +169,7 @@ function NextAppointment ({ appointment }: NextAppointmentProps) {
 interface AppointmentProps {
   appointments: Appointment[]
 }
+
 function Appointments ({ appointments }: AppointmentProps) {
   return (
     <div>
@@ -175,7 +181,7 @@ function Appointments ({ appointments }: AppointmentProps) {
           >
             <p style={{ fontSize: '1rem', fontWeight: '500', maxWidth: '90%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{appointment.description}</p>
             <p style={{ textTransform: 'capitalize', fontSize: '0.8rem', fontWeight: '500' }}>{appointment.status}</p>
-            <p style={{ fontSize: '0.8rem', fontWeight: '500' }}>{formatDate(appointment.start ?? '')}</p>
+            <p className={styles.cardSmallText}>{formatDate(appointment.start ?? '')}</p>
           </div>
           {index !== appointments.length - 1 && <Divider verticalMargin={'0.5rem'} />}
         </>

@@ -27,7 +27,7 @@ export function Dashboard () {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Layout patient={patient} />
-      <div style={{ padding: '2rem 0' }}>
+      <div style={{ padding: '2rem 0', background: '#FAFBFD', width: '100%' }}>
         <Workspace patient={patient} />
       </div>
     </div>

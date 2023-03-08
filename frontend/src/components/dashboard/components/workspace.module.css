@@ -12,4 +12,21 @@
     grid-column-gap: 0.5rem;
 }
 
+.cardSmallText {
+    font-size: 0.8rem;
+    font-weight: 500
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.allergyCriticalityLow {
+    color: #2A9D8F;
+}
+
+.allergyCriticalityHigh {
+    color: #F4A261
+}
+
 

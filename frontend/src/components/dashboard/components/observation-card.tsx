@@ -5,6 +5,8 @@ import { CardWrapper } from '../../../shared/card'
 import { Divider } from '../../../shared/divider/divider'
 import { client } from '../../../utils/aidbox-client'
 
+import styles from './workspace.module.css'
+
 function formatDate (date: string) {
   if (date.includes('T')) {
     let [year, month, day] = date.split('T')[0].split('-')
@@ -14,9 +16,10 @@ function formatDate (date: string) {
   let [year, month, day] = date.split('-')
   return `${day}/${month}/${year}`
 }
-export function Observations (): JSX.Element {
-  let searchParams = new URLSearchParams(document.location.search)
+export function ObservationsCard (): JSX.Element {
   let [total, setTotal] = useState<number>(0)
+  let [loading, setLoading] = useState(true)
+  let searchParams = new URLSearchParams(document.location.search)
   let patient_id = searchParams.get('id')
   let [observations, setObservations] = useState<Observation[]>()
 
@@ -47,6 +50,7 @@ export function Observations (): JSX.Element {
         // @ts-ignore
         setTotal(response.total)
         setObservations(response.entry.map((i) => i.resource))
+        setLoading(false)
       })
   }, [codes, patient_id])
 
@@ -56,11 +60,13 @@ export function Observations (): JSX.Element {
   }
 
   let bottomActions = total > 3 ? action : undefined
-  let title = 'Observation' + (total && `(${total})`)
+  let title = 'Observation' + (total > 0 ? `(${total})` : '')
 
   return (
     <CardWrapper
       title={title}
+      loading={loading}
+      empty={observations?.length === 0}
       bottomActions={bottomActions}
     >
       {observations?.map((observation, index) => (
@@ -71,7 +77,7 @@ export function Observations (): JSX.Element {
           >
             <div>
               <p style={{ fontSize: '1rem', fontWeight: '500', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{observation.code.text}</p>
-              <p style={{ fontSize: '0.8rem', fontWeight: '500' }}>{formatDate(observation.meta?.lastUpdated ?? '')}</p>
+              <p className={styles.cardSmallText}>{formatDate(observation.meta?.lastUpdated ?? '')}</p>
             </div>
             <p style={{ textTransform: 'capitalize', fontSize: '0.8rem', fontWeight: '600', display: 'flex', justifyContent: 'flex-end' }}>
               {observation.value && Object.entries(observation.value).map(([, element], key) => (

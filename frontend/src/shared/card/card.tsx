@@ -2,6 +2,8 @@ import cx from 'classnames'
 import { ReactNode } from 'react'
 
 import styles from './card.module.css'
+import { LoadingCard } from './loading-card'
+import { NoDateCard } from './no-date-card'
 
 interface BottomAction {
   label: string
@@ -10,13 +12,49 @@ interface BottomAction {
 
 interface Props {
   title: string
+  empty?: boolean
   children: ReactNode | ReactNode[]
   bottomActions?: BottomAction | BottomAction[]
   alignCenter?: boolean
 
+  loading?: boolean
 }
 
-export function CardWrapper ({ title, children, bottomActions, alignCenter }: Props) {
+export function CardWrapper ({ title, children, bottomActions, alignCenter, empty, loading }: Props) {
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <h4>{title}</h4>
+
+        <div
+          className={cx(styles.cardWrapper, {
+            [styles.withActions]: false,
+            [styles.alignCenter]: true
+          })}
+        >
+          <LoadingCard />
+        </div>
+      </div>
+    )
+  }
+
+  if (empty) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <h4>{title}</h4>
+
+        <div
+          className={cx(styles.cardWrapper, {
+            [styles.withActions]: false,
+            [styles.alignCenter]: true
+          })}
+        >
+          <NoDateCard />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h4>{title}</h4>
@@ -27,7 +65,7 @@ export function CardWrapper ({ title, children, bottomActions, alignCenter }: Pr
           [styles.alignCenter]: alignCenter
         })}
       >
-        {children}
+        { children}
       </div>
       {bottomActions && <BottomActions bottomActions={bottomActions} />}
     </div>

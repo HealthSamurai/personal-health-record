@@ -1,8 +1,10 @@
 import { Patient } from 'aidbox-sdk/aidbox-types'
 
+import { AllergiesIntoleranceCard } from './allergies-intolerance-card'
 import { AppointmentsCard } from './appointments-card'
-import { Conditions } from './conditions'
-import { Observations } from './observation'
+import { ConditionsCard } from './conditions-card'
+import { ImmunizationsCard } from './immunizations-card'
+import { ObservationsCard } from './observation-card'
 
 interface Props {
   patient?: Patient
@@ -16,10 +18,12 @@ export function Workspace ({ patient }: Props) {
       </h3>
 
       <div style={{ flexDirection: 'column', gap: '1rem', display: 'flex' }}>
-        <div style={{ display: 'grid', justifySelf: 'self-end', padding: '0 3rem', gridColumnGap: '3rem', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-          <Conditions />
+        <div style={{ display: 'grid', gridColumnGap: '3rem', gridRowGap: '2rem', gridTemplateColumns: 'repeat(3, 1fr)', padding: '0 3rem' }}>
+          <ConditionsCard />
           <AppointmentsCard />
-          <Observations />
+          <ObservationsCard />
+          <AllergiesIntoleranceCard />
+          <ImmunizationsCard />
         </div>
       </div>
     </>
