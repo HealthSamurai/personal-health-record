@@ -37,11 +37,12 @@
 }
 
 .selectContainer {
-  width: auto;
+  width: 170px;
+  position: relative;
 }
 
 .selectButton {
-  width: 170px;
+  width: 100%;
   border: 0;
   border-radius: 4px;
   background: #2a9d8f;
@@ -76,6 +77,8 @@
   margin: 0;
   margin-top: -4px;
   font-weight: 600;
+  position: absolute;
+  width: 100%;
 }
 
 .show {
@@ -86,6 +89,7 @@
   padding: 6px 10px;
   font-size: 0.8rem;
   margin-bottom: 0;
+  background: #fff;
 }
 
 .selectOptions li:active,
