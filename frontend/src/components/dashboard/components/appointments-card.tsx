@@ -7,19 +7,10 @@ import UserIcon from '../../../assets/user.svg'
 import { CardWrapper } from '../../../shared/card'
 import { Divider } from '../../../shared/divider/divider'
 import { client } from '../../../utils/aidbox-client'
+import { formatDate } from '../../../utils/format-date'
 import { transformName } from '../../../utils/transform-name'
 
 import styles from './workspace.module.css'
-
-function formatDate (date: string) {
-  if (date.includes('T')) {
-    let [year, month, day] = date.split('T')[0].split('-')
-    return `${day}/${month}/${year}`
-  }
-
-  let [year, month, day] = date.split('-')
-  return `${day}/${month}/${year}`
-}
 
 export function AppointmentsCard () {
   let [nextAppointment, setNextAppointment] = useState<Appointment>()
@@ -37,9 +28,8 @@ export function AppointmentsCard () {
 
     if (response.entry.length > 0) {
       setNextAppointment(response?.entry[0].resource ?? {})
-      setLoading(false)
     }
-
+    setLoading(false)
     return response.entry.length > 0
   }, [patient_id])
 
@@ -75,7 +65,7 @@ export function AppointmentsCard () {
     onClick: () => ({})
   }
 
-  let bottomAction = nextAppointment ? [nextAppointmentAction, appointmentsAction] : appointmentsAction
+  let bottomAction = getButtonAction({ appointments, nextAppointment, nextAppointmentAction, appointmentsAction })
 
   let title = nextAppointment ? 'Next Appointment' : 'Appointments' + (total > 0 ? `(${total})` : '')
 
@@ -90,6 +80,34 @@ export function AppointmentsCard () {
       {nextAppointment ? <NextAppointment appointment={nextAppointment} /> : <Appointments appointments={appointments} />}
     </CardWrapper>
   )
+}
+
+interface ButtonActionProps {
+  appointments: Appointment[],
+  nextAppointment?: Appointment,
+  nextAppointmentAction: {
+    label: string,
+    onClick: () => void,
+  },
+  appointmentsAction: {
+    label: string,
+    onClick: () => void,
+  },
+}
+
+function getButtonAction ({
+  appointments,
+  nextAppointment,
+  nextAppointmentAction,
+  appointmentsAction
+}: ButtonActionProps) {
+  if (nextAppointment) {
+    return [nextAppointmentAction, appointmentsAction]
+  }
+  if (appointments.length) {
+    return appointmentsAction
+  }
+  return undefined
 }
 
 interface NextAppointmentProps {
