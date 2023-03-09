@@ -9,13 +9,13 @@ import { formatDate } from '../../../utils/format-date'
 import styles from './workspace.module.css'
 
 export function ObservationsCard (): JSX.Element {
-  let searchParams = new URLSearchParams(document.location.search)
-  let [total, setTotal] = useState<number>(0)
-  let [loading, setLoading] = useState(true)
-  let patient_id = searchParams.get('id')
-  let [observations, setObservations] = useState<Observation[]>()
+  const searchParams = new URLSearchParams(document.location.search)
+  const [total, setTotal] = useState<number>(0)
+  const [loading, setLoading] = useState(true)
+  const patient_id = searchParams.get('id')
+  const [observations, setObservations] = useState<Observation[]>()
 
-  let codes = useMemo(() => [
+  const codes = useMemo(() => [
     '8302-2',
     '55284-4',
     '3141-9',
@@ -47,13 +47,13 @@ export function ObservationsCard (): JSX.Element {
       })
   }, [codes, patient_id])
 
-  let action = {
+  const action = {
     label: 'Show more',
     onClick: () => ({})
   }
 
-  let bottomActions = total > 3 ? action : undefined
-  let title = 'Observation' + (total > 0 ? `(${total})` : '')
+  const bottomActions = total > 3 ? action : undefined
+  const title = 'Observation' + (total > 0 ? `(${total})` : '')
 
   return (
     <CardWrapper

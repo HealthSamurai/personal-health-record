@@ -11,11 +11,11 @@ import { kebabToFriendlyString } from '../../../utils/kebab-to-friendly-string'
 import styles from './workspace.module.css'
 
 export function AllergiesIntoleranceCard () {
-  let [allergies, setAllergies] = useState<AllergyIntolerance[]>([])
-  let [loading, setLoading] = useState(true)
-  let [total, setTotal] = useState<number>(0)
-  let searchParams = new URLSearchParams(document.location.search)
-  let patient_id = searchParams.get('id')
+  const [allergies, setAllergies] = useState<AllergyIntolerance[]>([])
+  const [loading, setLoading] = useState(true)
+  const [total, setTotal] = useState<number>(0)
+  const searchParams = new URLSearchParams(document.location.search)
+  const patient_id = searchParams.get('id')
 
   useEffect(() => {
     client.getResources('AllergyIntolerance')
@@ -32,13 +32,13 @@ export function AllergiesIntoleranceCard () {
       })
   }, [patient_id])
 
-  let title = 'Allergy' + (total > 3 ? `(${total})` : '')
-  let action = {
+  const title = 'Allergy' + (total > 3 ? `(${total})` : '')
+  const action = {
     label: 'Show more',
     onClick: () => ({})
   }
 
-  let bottomActions = total > 3 ? action : undefined
+  const bottomActions = total > 3 ? action : undefined
 
   return (
     <CardWrapper

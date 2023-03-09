@@ -7,10 +7,10 @@ import { Layout } from '../layout'
 import { Workspace } from './components'
 
 export function Dashboard () {
-  let [patient, setPatient] = useState<Patient>()
+  const [patient, setPatient] = useState<Patient>()
 
-  let searchParams = new URLSearchParams(document.location.search)
-  let patient_id = searchParams.get('id')
+  const searchParams = new URLSearchParams(document.location.search)
+  const patient_id = searchParams.get('id')
 
   useEffect(() => {
     if (!patient_id) {

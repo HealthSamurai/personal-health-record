@@ -13,15 +13,15 @@ import { transformName } from '../../../utils/transform-name'
 import styles from './workspace.module.css'
 
 export function AppointmentsCard () {
-  let [nextAppointment, setNextAppointment] = useState<Appointment>()
-  let [appointments, setAppointments] = useState<Appointment[]>([])
-  let [total, setTotal] = useState<number>(0)
-  let [loading, setLoading] = useState(true)
-  let searchParams = new URLSearchParams(document.location.search)
-  let patient_id = searchParams.get('id')
+  const [nextAppointment, setNextAppointment] = useState<Appointment>()
+  const [appointments, setAppointments] = useState<Appointment[]>([])
+  const [total, setTotal] = useState<number>(0)
+  const [loading, setLoading] = useState(true)
+  const searchParams = new URLSearchParams(document.location.search)
+  const patient_id = searchParams.get('id')
 
-  let getNextAppointment = useCallback(async () => {
-    let response = await client.getResources('Appointment')
+  const getNextAppointment = useCallback(async () => {
+    const response = await client.getResources('Appointment')
       .where('patient', `Patient/${patient_id}`)
       .where('date', new Date().toISOString(), 'gt')
       .sort([{ key: 'date', dir: 'acs' }])
@@ -33,8 +33,8 @@ export function AppointmentsCard () {
     return response.entry.length > 0
   }, [patient_id])
 
-  let getAppointments = useCallback(async () => {
-    let response = await client.getResources('Appointment')
+  const getAppointments = useCallback(async () => {
+    const response = await client.getResources('Appointment')
       .where('patient', `Patient/${patient_id}`)
 
     if (response.entry.length > 0) {
@@ -55,19 +55,19 @@ export function AppointmentsCard () {
       })
   }, [getAppointments, getNextAppointment])
 
-  let nextAppointmentAction = {
+  const nextAppointmentAction = {
     label: 'Manage Appointment',
     onClick: () => ({})
   }
 
-  let appointmentsAction = {
+  const appointmentsAction = {
     label: 'Show all',
     onClick: () => ({})
   }
 
   let bottomAction = getButtonAction({ appointments, nextAppointment, nextAppointmentAction, appointmentsAction })
 
-  let title = nextAppointment ? 'Next Appointment' : 'Appointments' + (total > 0 ? `(${total})` : '')
+  const title = nextAppointment ? 'Next Appointment' : 'Appointments' + (total > 0 ? `(${total})` : '')
 
   return (
     <CardWrapper
@@ -114,11 +114,11 @@ interface NextAppointmentProps {
   appointment: Appointment
 }
 function NextAppointment ({ appointment }: NextAppointmentProps) {
-  let [practitionerRole, setPractitionerRole] = useState<PractitionerRole>()
-  let [practitioner, setPractitioner] = useState<Practitioner>()
+  const [practitionerRole, setPractitionerRole] = useState<PractitionerRole>()
+  const [practitioner, setPractitioner] = useState<Practitioner>()
 
   async function getPractitionerRole (id: string) {
-    let response = await client.getResources('PractitionerRole')
+    const response = await client.getResources('PractitionerRole')
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
       .where('.practitioner.reference', `Practitioner/${id}`)
@@ -131,7 +131,7 @@ function NextAppointment ({ appointment }: NextAppointmentProps) {
   }
 
   async function getPractitioner (id: string) {
-    let practitioner = await client.getResource('Practitioner', id)
+    const practitioner = await client.getResource('Practitioner', id)
 
     if (!(practitioner instanceof Error)) {
       setPractitioner(practitioner)
@@ -139,8 +139,8 @@ function NextAppointment ({ appointment }: NextAppointmentProps) {
   }
 
   useEffect(() => {
-    let practitioner = appointment.participant?.find((p) => p.actor?.resourceType === 'Practitioner')
-    let id = practitioner?.actor?.id
+    const practitioner = appointment.participant?.find((p) => p.actor?.resourceType === 'Practitioner')
+    const id = practitioner?.actor?.id
     if (id) {
       getPractitionerRole(id)
         .then((practitionerRole) => {
@@ -151,15 +151,15 @@ function NextAppointment ({ appointment }: NextAppointmentProps) {
     }
   }, [appointment.participant])
 
-  let startDate = format(new Date(appointment.start ?? ''), 'dd MMMM')
-  let startTime = appointment.start && format(new Date(appointment.start), 'hh:mm a')
-  let endTime = appointment.end && format(new Date(appointment.end), 'hh:mm a')
+  const startDate = format(new Date(appointment.start ?? ''), 'dd MMMM')
+  const startTime = appointment.start && format(new Date(appointment.start), 'hh:mm a')
+  const endTime = appointment.end && format(new Date(appointment.end), 'hh:mm a')
 
-  let time = startTime
+  const time = startTime
     ? startTime + (endTime ? ' - ' + endTime : '')
     : null
 
-  let practitionerName = practitionerRole?.practitioner?.display ?? transformName(practitioner?.name)
+  const practitionerName = practitionerRole?.practitioner?.display ?? transformName(practitioner?.name)
 
   return (
     <div style={{ padding: '1rem 0.5rem' }}>

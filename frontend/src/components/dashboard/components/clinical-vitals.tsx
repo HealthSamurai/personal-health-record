@@ -19,7 +19,7 @@ import { formatDate } from '../../../utils/format-date'
 
 import styles from './workspace.module.css'
 
-let observationCodes = {
+const observationCodes = {
   'Body weight': '29463-7',
   'Body height': '8302-2',
   'Body temperature': '8310-5',
@@ -42,13 +42,13 @@ ChartJS.register(
 )
 
 export function ClinicalVitals (): JSX.Element {
-  let searchParams = new URLSearchParams(document.location.search)
-  let patient_id = searchParams.get('id')
-  let [isOptionsOpen, setIsOptionsOpen] = useState(false)
-  let [selectedOption, setSelectedOption] = useState<option>('Body weight')
-  let [observations, setObservations] = useState<Observation[]>()
+  const searchParams = new URLSearchParams(document.location.search)
+  const patient_id = searchParams.get('id')
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<option>('Body weight')
+  const [observations, setObservations] = useState<Observation[]>()
 
-  let optionsList = Object.keys(observationCodes) as never as Array<option>
+  const optionsList = Object.keys(observationCodes) as never as Array<option>
 
   useEffect(() => {
     client
@@ -60,9 +60,9 @@ export function ClinicalVitals (): JSX.Element {
       })
   }, [selectedOption, patient_id])
 
-  let labels = observations?.map((observation) => formatDate(observation.effective?.dateTime || ''))
+  const labels = observations?.map((observation) => formatDate(observation.effective?.dateTime || ''))
 
-  let data = {
+  const data = {
     labels,
     datasets: [
       {
@@ -74,16 +74,16 @@ export function ClinicalVitals (): JSX.Element {
     ]
   }
 
-  let toggleOptions = () => {
+  const toggleOptions = () => {
     setIsOptionsOpen(!isOptionsOpen)
   }
 
-  let setSelectedThenCloseDropdown = (option: option) => {
+  const setSelectedThenCloseDropdown = (option: option) => {
     setSelectedOption(option)
     setIsOptionsOpen(false)
   }
 
-  let title = 'Clinical vitals'
+  const title = 'Clinical vitals'
 
   return (
     <CardWrapper

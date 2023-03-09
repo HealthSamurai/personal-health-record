@@ -69,7 +69,7 @@ interface BottomActionsProps {
   bottomActions?: BottomAction | BottomAction[]
 }
 export function BottomActions ({ bottomActions }: BottomActionsProps) {
-  let isArray = Array.isArray(bottomActions)
+  const isArray = Array.isArray(bottomActions)
 
   return (
     <div

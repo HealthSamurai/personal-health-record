@@ -9,11 +9,11 @@ import { formatDate } from '../../../utils/format-date'
 import styles from './workspace.module.css'
 
 export function ConditionsCard (): JSX.Element {
-  let [conditions, setConditions] = useState<Condition[]>([])
-  let [loading, setLoading] = useState(true)
-  let [total, setTotal] = useState<number>(0)
-  let searchParams = new URLSearchParams(document.location.search)
-  let patient_id = searchParams.get('id')
+  const [conditions, setConditions] = useState<Condition[]>([])
+  const [loading, setLoading] = useState(true)
+  const [total, setTotal] = useState<number>(0)
+  const searchParams = new URLSearchParams(document.location.search)
+  const patient_id = searchParams.get('id')
 
   useEffect(() => {
     client.getResources('Condition')
@@ -32,13 +32,13 @@ export function ConditionsCard (): JSX.Element {
     return <div>Loading</div>
   }
 
-  let action = {
+  const action = {
     label: 'Show more',
     onClick: () => ({})
   }
 
-  let bottomActions = total > 3 ? action : undefined
-  let title = 'Diagnosis' + (total > 0 ? `(${total})` : '')
+  const bottomActions = total > 3 ? action : undefined
+  const title = 'Diagnosis' + (total > 0 ? `(${total})` : '')
 
   return (
     <CardWrapper
