@@ -131,10 +131,13 @@ export function ClinicalVitals (): JSX.Element {
       </div>
       <Line
         options={{
-          responsive: true
+          responsive: true,
+          layout: {
+            autoPadding: true
+          }
         }}
         data={data}
-      />;
+      />
 
     </CardWrapper>
   )
