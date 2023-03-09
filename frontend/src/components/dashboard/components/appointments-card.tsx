@@ -52,8 +52,8 @@ export function AppointmentsCard () {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       setTotal(response.total)
-      setLoading(false)
     }
+    setLoading(false)
   }, [patient_id])
 
   useEffect(() => {

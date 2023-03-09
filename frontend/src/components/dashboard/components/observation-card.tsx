@@ -35,6 +35,7 @@ export function ObservationsCard (): JSX.Element {
   useEffect(() => {
     client
       .getResources('Observation')
+      .where('patient', `Patient/${patient_id}`)
       .where('code', codes)
       .count(3)
       .then((response) => {

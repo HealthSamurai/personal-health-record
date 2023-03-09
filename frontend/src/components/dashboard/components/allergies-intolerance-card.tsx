@@ -22,15 +22,17 @@ export function AllergiesIntoleranceCard () {
       .where('patient', `Patient/${patient_id}`)
       .count(3)
       .then((response) => {
-        setAllergies(response.entry.map((allergy) => allergy.resource))
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        setTotal(response.total)
+        if (response.entry.length > 0) {
+          setAllergies(response.entry.map((allergy) => allergy.resource))
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          setTotal(response.total)
+        }
         setLoading(false)
       })
   }, [patient_id])
 
-  let title = 'Allergy' + (total > 3 && `(${total})`)
+  let title = 'Allergy' + (total > 3 ? `(${total})` : '')
   let action = {
     label: 'Show more',
     onClick: () => ({})

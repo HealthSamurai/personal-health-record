@@ -30,7 +30,7 @@ export function ImmunizationsCard () {
       })
   }, [patient_id])
 
-  let title = 'Immunizations' + (total > 3 && `(${total})`)
+  let title = 'Immunizations' + (total > 3 ? `(${total})` : '')
   let action = {
     label: 'Show more',
     onClick: () => ({})

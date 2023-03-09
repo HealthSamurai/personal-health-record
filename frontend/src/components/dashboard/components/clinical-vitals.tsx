@@ -53,6 +53,7 @@ export function ClinicalVitals (): JSX.Element {
   useEffect(() => {
     client
       .getResources('Observation')
+      .where('patient', `Patient/${patient_id}`)
       .where('code', observationCodes[selectedOption])
       .then((response) => {
         setObservations(response.entry.map((i) => i.resource))
