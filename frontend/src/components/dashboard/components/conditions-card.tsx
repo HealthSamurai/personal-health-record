@@ -19,6 +19,7 @@ export function ConditionsCard (): JSX.Element {
     client.getResources('Condition')
       .where('patient', `Patient/${patient_id}`)
       .count(3)
+      .sort([{ key: 'recorded-date', dir: 'desc' }])
       .then((response) => {
         setConditions(response.entry.map((condition) => condition.resource))
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
