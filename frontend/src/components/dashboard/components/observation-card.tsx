@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { CardWrapper } from '../../../shared/card'
 import { Divider } from '../../../shared/divider/divider'
-import { client } from '../../../utils/aidbox-client'
+import { aidboxClient } from '../../../utils/aidbox-client'
 import { formatDate } from '../../../utils/format-date'
 
 import styles from './workspace.module.css'
@@ -33,7 +33,7 @@ export function ObservationsCard (): JSX.Element {
   ], [])
 
   useEffect(() => {
-    client
+    aidboxClient
       .getResources('Observation')
       .where('patient', `Patient/${patient_id}`)
       .where('code', codes)

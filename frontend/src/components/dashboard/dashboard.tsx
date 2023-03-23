@@ -1,10 +1,10 @@
 import { Patient } from 'aidbox-sdk/aidbox-types'
 import { useEffect, useState } from 'react'
 
-import { client } from '../../utils/aidbox-client'
+import { aidboxClient } from '../../utils/aidbox-client'
 import { Layout } from '../layout'
 
-import { Workspace } from './components'
+import { Workspace } from './components/workspace'
 
 export function Dashboard () {
   const [patient, setPatient] = useState<Patient>()
@@ -17,7 +17,7 @@ export function Dashboard () {
       return
     }
 
-    client.getResource('Patient', patient_id).then((response) => {
+    aidboxClient.getResource('Patient', patient_id).then((response) => {
       if ((response instanceof Error)) return
 
       setPatient(response)

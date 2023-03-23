@@ -1,11 +1,13 @@
 import { Patient } from 'aidbox-sdk/aidbox-types'
 
-import { AllergiesIntoleranceCard } from './allergies-intolerance-card'
-import { AppointmentsCard } from './appointments-card'
-import { ClinicalVitals } from './clinical-vitals'
-import { ConditionsCard } from './conditions-card'
-import { ImmunizationsCard } from './immunizations-card'
-import { ObservationsCard } from './observation-card'
+import {
+  AllergiesIntoleranceCard,
+  ImmunizationsCard,
+  AppointmentsCard,
+  ConditionsCard,
+  ClinicalVitals,
+  ObservationsCard
+} from './index'
 
 interface Props {
   patient?: Patient

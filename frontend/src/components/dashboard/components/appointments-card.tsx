@@ -6,7 +6,7 @@ import ClockIcon from '../../../assets/clock.svg'
 import UserIcon from '../../../assets/user.svg'
 import { CardWrapper } from '../../../shared/card'
 import { Divider } from '../../../shared/divider/divider'
-import { client } from '../../../utils/aidbox-client'
+import { aidboxClient } from '../../../utils/aidbox-client'
 import { formatDate } from '../../../utils/format-date'
 import { transformName } from '../../../utils/transform-name'
 
@@ -21,7 +21,7 @@ export function AppointmentsCard () {
   const patient_id = searchParams.get('id')
 
   const getNextAppointment = useCallback(async () => {
-    const response = await client.getResources('Appointment')
+    const response = await aidboxClient.getResources('Appointment')
       .where('patient', `Patient/${patient_id}`)
       .where('date', new Date().toISOString(), 'gt')
       .sort([{ key: 'date', dir: 'acs' }])
@@ -34,7 +34,7 @@ export function AppointmentsCard () {
   }, [patient_id])
 
   const getAppointments = useCallback(async () => {
-    const response = await client.getResources('Appointment')
+    const response = await aidboxClient.getResources('Appointment')
       .where('patient', `Patient/${patient_id}`)
 
     if (response.entry.length > 0) {
@@ -65,7 +65,7 @@ export function AppointmentsCard () {
     onClick: () => ({})
   }
 
-  let bottomAction = getButtonAction({ appointments, nextAppointment, nextAppointmentAction, appointmentsAction })
+  const bottomAction = getButtonAction({ appointments, nextAppointment, nextAppointmentAction, appointmentsAction })
 
   const title = nextAppointment ? 'Next Appointment' : 'Appointments' + (total > 0 ? `(${total})` : '')
 
@@ -118,7 +118,7 @@ function NextAppointment ({ appointment }: NextAppointmentProps) {
   const [practitioner, setPractitioner] = useState<Practitioner>()
 
   async function getPractitionerRole (id: string) {
-    const response = await client.getResources('PractitionerRole')
+    const response = await aidboxClient.getResources('PractitionerRole')
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
       .where('.practitioner.reference', `Practitioner/${id}`)
@@ -131,7 +131,7 @@ function NextAppointment ({ appointment }: NextAppointmentProps) {
   }
 
   async function getPractitioner (id: string) {
-    const practitioner = await client.getResource('Practitioner', id)
+    const practitioner = await aidboxClient.getResource('Practitioner', id)
 
     if (!(practitioner instanceof Error)) {
       setPractitioner(practitioner)

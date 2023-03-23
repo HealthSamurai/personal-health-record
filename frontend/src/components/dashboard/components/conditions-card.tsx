@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { CardWrapper } from '../../../shared/card'
 import { Divider } from '../../../shared/divider/divider'
-import { client } from '../../../utils/aidbox-client'
+import { aidboxClient } from '../../../utils/aidbox-client'
 import { formatDate } from '../../../utils/format-date'
 
 import styles from './workspace.module.css'
@@ -16,7 +16,7 @@ export function ConditionsCard (): JSX.Element {
   const patient_id = searchParams.get('id')
 
   useEffect(() => {
-    client.getResources('Condition')
+    aidboxClient.getResources('Condition')
       .where('patient', `Patient/${patient_id}`)
       .count(3)
       .sort([{ key: 'recorded-date', dir: 'desc' }])

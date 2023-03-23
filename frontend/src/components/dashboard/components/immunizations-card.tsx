@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { CardWrapper } from '../../../shared/card'
 import { Divider } from '../../../shared/divider/divider'
-import { client } from '../../../utils/aidbox-client'
+import { aidboxClient } from '../../../utils/aidbox-client'
 import { formatDate } from '../../../utils/format-date'
 import { kebabToFriendlyString } from '../../../utils/kebab-to-friendly-string'
 
@@ -18,7 +18,7 @@ export function ImmunizationsCard () {
   const patient_id = searchParams.get('id')
 
   useEffect(() => {
-    client.getResources('Immunization')
+    aidboxClient.getResources('Immunization')
       .where('patient', `Patient/${patient_id}`)
       .count(3)
       .then((response) => {

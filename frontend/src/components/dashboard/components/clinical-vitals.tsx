@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 
 import { CardWrapper } from '../../../shared/card'
-import { client } from '../../../utils/aidbox-client'
+import { aidboxClient } from '../../../utils/aidbox-client'
 import { formatDate } from '../../../utils/format-date'
 
 import styles from './workspace.module.css'
@@ -51,7 +51,7 @@ export function ClinicalVitals (): JSX.Element {
   const optionsList = Object.keys(observationCodes) as never as Array<option>
 
   useEffect(() => {
-    client
+    aidboxClient
       .getResources('Observation')
       .where('patient', `Patient/${patient_id}`)
       .where('code', observationCodes[selectedOption])
