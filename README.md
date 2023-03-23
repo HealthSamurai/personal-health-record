@@ -1,4 +1,4 @@
-# PERSONAL HEALTH RECORD
+# Personal Health Record Dashboard
 
 This example shown how to use: 
 * Aidbox SDK
