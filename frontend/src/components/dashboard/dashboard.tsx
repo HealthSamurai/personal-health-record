@@ -38,13 +38,15 @@ export function Dashboard () {
 
   useEffect(() => {
     if (!patientId) {
-      aidboxClient.getResources('Patient').then((response) => {
-        setPatients(response.entry?.map((r) => ({
-          name: r.resource?.name?.[0]?.family + ' ' + r.resource?.name?.[0]?.given?.[0],
-          id: r.resource?.id,
-          address: r.resource.address ? transformAddress(r.resource.address) : undefined
-        })) ?? [])
-      })
+      aidboxClient.getResources('Patient')
+        .elements(['name', 'address', 'id'])
+        .then((response) => {
+          setPatients(response.entry?.map((r) => ({
+            name: r.resource?.name?.[0]?.family + ' ' + r.resource?.name?.[0]?.given?.[0],
+            id: r.resource?.id,
+            address: r.resource.address ? transformAddress(r.resource.address) : undefined
+          })) ?? [])
+        })
       return
     }
 
